@@ -8,7 +8,7 @@ title: DREAM Project Site
 
 ## About Me
 
-
+My name is Jorge and I am a high schooler. I took an internship in bioinformatics in the hope to learn new things about biology. I am a rising senior and want to pursue a medical background. It was a good opportunity to learn more about biology and the process by which they process information from test results. 
 
 ## About My Advisor
 
