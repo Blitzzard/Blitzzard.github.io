@@ -1,6 +1,6 @@
 ---
 layout: default
-title: DREAM Project Site
+title: Projects site
 ---
 
 * TOC
