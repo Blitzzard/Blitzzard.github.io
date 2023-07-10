@@ -12,11 +12,11 @@ My name is Jorge and I am a high schooler. I took an internship in bioinformatic
 
 ## About My Advisor
 
-Advisor info goes here.
+My advisors Professor Ramaraj and Colin supervised my work to make sure that my work was correct. 
 
 ## About My Project
 
-The project I participated in was using situ hybridization, microarrays, and MRI scans to gather data on the parts of the brain. We then used this information to look into possible correlations between individual genes and their expressions at certain voxel row numbers, concerning a specific Structure-ID present within the brain stem. This is to help us better understand how the brain interacts with each other and the relationships between the structure IDs or the different nuclei. 
+I was involved in a project that utilized situ hybridization, microarrays, and MRI scans to collect data on various brain regions. This data was then analyzed to establish potential links between individual genes and their expression at specific voxel row numbers, particularly about a particular Structure ID found in the brain stem. This study aimed to deepen our knowledge of how the brain functions and the relationship between different structure IDs and nuclei.
 
 [My Final Report](files/finalreport.pdf)
 
