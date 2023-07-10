@@ -18,7 +18,7 @@ My advisors Professor Ramaraj and Colin supervised my work to make sure that my 
 
 I was involved in a project that utilized situ hybridization, microarrays, and MRI scans to collect data on various brain regions. This data was then analyzed to establish potential links between individual genes and their expression at specific voxel row numbers, particularly about a particular Structure ID found in the brain stem. This study aimed to deepen our knowledge of how the brain functions and the relationship between different structure IDs and nuclei.
 
-[My Final Report](files/finalreport.pdf)
+[My Final Report](files/structure 143)
 
 ## My Blog
 
