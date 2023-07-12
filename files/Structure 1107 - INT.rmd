@@ -1,0 +1,197 @@
+---
+title: "Jorge_MLBrainstem"
+author: "Jorge"
+date: "2023-06-23"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+library(dplyr)
+```
+```{r}
+library(readxl)
+xl_NewIntC <- read_excel("xl_NewIntC.xlsx")
+```
+```{r}
+ xl_NewIntC <- subset(xl_NewIntC, select = -c(...1, voxRowNum, X, Y, Z))
+```
+
+```{r}
+#filtering through data
+TEST_1107 <- filter(xl_NewIntC,`Structure-ID` == 1107)
+
+#Removing Structure-ID label
+TEST_1107 <- TEST_1107 %>%
+  select(-c(`Structure-ID`))
+
+#Size of data
+dim(TEST_1107)
+```
+
+```{r}
+#New data frame created
+head(TEST_1107)
+```
+
+##### **Generating Correlation Matrix**
+
+Below is the code responsible for generating the correlation matrix of Structure-ID: 1107.
+
+```{r}
+library(corrplot)
+```
+
+```{r}
+library(doMC) 
+```
+
+```{r}
+#Creating correlation matrix
+correlation_1107 <- cor(TEST_1107)
+
+
+#Adding logical vector that indicates which genes are N/A
+is_na <- is.na(correlation_1107)
+
+#Pulling the names of the columns in the correlation matrix
+column_names <- rownames(correlation_1107)
+
+#Finding the indices of the logical vector that are TRUE
+indices_Prune <- which(is_na)
+
+#Pulling the names of the indices that were found
+na_columns <- column_names[indices_Prune]
+
+#Printing the names of the columns that have N/A
+head(na_columns, 78) 
+```
+
+```{r}
+#Removing Inactive Genes
+nu_TEST_1107 <- TEST_1107 %>%   select(-c(`Setd5-37`, `Adcy9-83`, `Camk2g-189`, `Col6a1-290`, `Dbh-326`, `Dlx3-350`, `Erdr1-378`, `Enc1-390`, `Grm1-537`, `Hars-554`, `L1cam-620`, `Lix1-643`, `Neurod6-698`, `Ogt-758`, `Pcsk1n-777`, `Pkia-805`, `Prkcz-841`, `Sst-1001`, `Ywhag-1124`, `Nr1d2-1245`, `Atm-1329`, `Esrra-1351`, `Pex14-1397`, `Shh-1418`, `Cpt1a-1478`, `Foxd3-1496`, `Suv39h2-1538`, `Wdr18-1551`, `Homer1-1748`, `Tsen34-1944`, `Pttg1ip-1956`, `Snhg7-1968`, `6330407J23Rik-1988`, `Rfx7-1998`, `Ankrd33-2006`, `Adrm1-2019`, `Ankrd10-2027`, `Apbb1-2033`, `Agap3-2089`, `Cpt1c-2117`, `Crat-2119`, `Donson-2157`, `Erf-2195`, `Fbln1-2205`, `Gabarap-2245`, `Irx1-2325`, `158303`, `Kpna4-2359`, `Lhx4-2377`, `Mapk13-2397`, `Ndufs1-2421`, `Nfkbie-2425`, `Park2-2462`, `Ptn-2507`, `Traf7-2527`, `Aurka-2643`, `Traf2-2691`, `Mapk3-32576`, `Pim2-32583`, `Ube2i-45666`, `Dbndd2-45668`, `Arxes1-45841`, `Limk2-61002`, `Bcap29-104826`, `Vldlr-121089`, `Tnfrsf25-121096`, `Gabpb1-121098`, `F2rl1-199391`, `Mef2a-199392`, `Tpm3-275873`, `Atp6v0b-293682`, `Slco3a1-293691`, `Aqp3-293692`, `Zfand3-293694`, `Actr1a-321206`, `Pdcl-324213`, `Ptbp1-356857`, `Cd6-112205643`))
+```
+
+```{r}
+#Creating correlation matrix again
+nu_correlation_1107 <- cor(nu_TEST_1107)
+```
+
+#### **Screening Through Correlation Matrix**
+
+##### **Correlation Threshold: 90%**
+
+Below is my attempt at screening through the produced correlation matrix (nu_correlation_1107) and returning specific gene pairs whose correlation coefficient values are equal to or greater than 90%.
+
+```{r}
+library(caret)
+```
+
+```{r}
+# METHOD 1 #
+#Screening through matrix and returning columns (genes) that have 90% correlation or greater 
+highlyCorrelated90 <- findCorrelation(nu_correlation_1107, cutoff = .90, names = TRUE)
+    
+#Printing a sample of the returned columns (genes)
+head(highlyCorrelated90)
+```
+
+```{r}
+tail(highlyCorrelated90)
+```
+
+```{r}
+# METHOD 2 #
+#Finding all column pairs that have a correlation coefficient greater than 0.9
+correlated_pairs90 <- which(abs(nu_correlation_1107) > 0.9, arr.ind = TRUE)
+
+#Printing the number of pairs found in total       
+totalAT90 <- length(correlated_pairs90) - 4271
+totalAT90
+```
+
+```{r}
+#Printing a sample of the specified column pairs.
+head(correlated_pairs90)
+```
+
+```{r}
+tail(correlated_pairs90)
+```
+
+#### **Screening Through Correlation Matrix**
+
+##### **Correlation Threshold: 80%**
+
+Below is my attempt at screening through the produced correlation matrix (nu_correlation_1107) and returning specific gene pairs whose correlation coefficient values are equal to or greater than 80%.
+
+```{r}
+# METHOD 1 
+#Screening through matrix and returning columns (genes) that have 80% correlation or greater
+highlyCorrelated80 <- findCorrelation(nu_correlation_1107, cutoff = .80, names = TRUE)
+
+#Printing a sample of the returned columns (genes)
+head(highlyCorrelated80)
+```
+
+```{r}
+tail(highlyCorrelated80)
+```
+
+```{r}
+# METHOD 2 
+#Finding all column pairs that have a correlation coefficient greater than 0.8
+correlated_pairs80 <- which(abs(nu_correlation_1107) > 0.8, arr.ind = TRUE)
+  
+#Printing the number of pairs found in total 
+totalAT80 <- length(correlated_pairs80) - 4271
+totalAT80
+```
+
+```{r}
+#Printing a sample of the specified column pairs.
+head(correlated_pairs80)
+```
+
+```{r}
+tail(correlated_pairs80)
+```
+
+#### **Screening Through Correlation Matrix**
+
+##### **Correlation Threshold: 70%**
+
+Below is my attempt at screening through the produced correlation matrix (nu_correlation_1107) and returning specific gene pairs whose correlation coefficient values are equal to or greater than 70%.
+
+```{r}
+# METHOD 1 
+#Screening through matrix and returning columns (genes) that have 70% correlation or greater
+highlyCorrelated70 <- findCorrelation(nu_correlation_1107, cutoff = 0.70, names = TRUE)
+
+#Printing a sample of the returned columns (genes)
+head(highlyCorrelated70)
+```
+
+```{r}
+tail(highlyCorrelated70)
+```
+
+```{r}
+# METHOD 2 
+#Finding all column pairs that have a correlation coefficient greater than 0.7
+correlated_pairs70 <- which(abs(nu_correlation_1107) > 0.7, arr.ind = TRUE)
+
+#Printing the number of pairs found in total 
+totalAT70 <- length(correlated_pairs70) - 4271
+totalAT70
+```
+
+```{r}
+#Printing a sample of the specified column pairs.
+head(correlated_pairs70)
+```
+
+```{r}
+tail(correlated_pairs70)
+```
