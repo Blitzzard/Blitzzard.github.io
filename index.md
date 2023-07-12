@@ -23,3 +23,5 @@ I was involved in a project that utilized situ hybridization, microarrays, and M
 ## My Blog
 
 [My Blog](blog.html)
+
+![San Juan Mountain](/images/licensed-image.jfif)
